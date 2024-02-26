@@ -24,12 +24,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       url: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       restaurantCategoryId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
           model: {
             tableName: 'RestaurantCategories'
@@ -39,12 +37,11 @@ module.exports = {
       },
       shippingCosts: {
         allowNull: false,
+        defaultValue: 0.0, 
         type: Sequelize.DOUBLE
       },
       email: {
-        allowNull: false,
         type: Sequelize.STRING,
-        unique: true
       },
       logo: {
         type: Sequelize.STRING
@@ -66,6 +63,7 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        onDelete: 'CASCADE',
         references: {
           model: {
             tableName: 'Users'
@@ -74,8 +72,14 @@ module.exports = {
         }
       },
       status: {
-        allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.ENUM,
+        values: [
+          'online',
+          'offline',
+          'closed',
+          'temporarily closed'
+        ],
+        defaultValue: 'offline'
       }
       
     })
